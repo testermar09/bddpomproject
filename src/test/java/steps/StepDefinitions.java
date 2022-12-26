@@ -13,14 +13,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import pages.LoginPage;
+import pages.SearchHotelPage;
 
 public class StepDefinitions  {
 
@@ -32,6 +36,7 @@ public class StepDefinitions  {
 	
 	
 	LoginPage loginPage;
+	SearchHotelPage searchHotelPage;
 	
 
 	@Before
@@ -98,6 +103,11 @@ public class StepDefinitions  {
 	}
 	
 	
+	@Then("user validates title to be {string}")
+	public void user_validates_title_to_be(String expTitle) {
+	    
+		Assert.assertEquals(driver.getTitle(), expTitle);
+	}
 	
 	
 	
@@ -108,6 +118,12 @@ public class StepDefinitions  {
 		loginPage = new LoginPage(driver);
 	}
 
+	@Given("user is on SearchHotelPage")
+	public void user_is_on_search_hotel_page() {
+		
+		searchHotelPage = new SearchHotelPage(driver);
+	}
+	
 	@When("user enters text in textbox in LoginPage")
 	public void user_enters_text_int_textbox(DataTable dataTable) {
 		// Write code here that turns the phrase above into concrete actions
@@ -150,8 +166,50 @@ public class StepDefinitions  {
 		if (listOfMaps.get(0).get("objectName").equalsIgnoreCase("loginButton"))
 		{
 			loginPage.loginButton.click();
+			
+			
 		}
 		
 	}
+	
+	@When("user enter details in SearchHotelPage")
+	public void user_enter_details_in_search_hotel_page(DataTable dataTable) {
+	   
+		List<Map<String, String>> listOfMaps = dataTable.asMaps();
+		
+		
+		new Select(searchHotelPage.locationDropdown).selectByVisibleText(listOfMaps.get(0).get("Location"));
+		new Select(searchHotelPage.hotelsDropdown).selectByVisibleText(listOfMaps.get(0).get("Hotels"));
+		searchHotelPage.checkInDateTextbox.clear();
+		searchHotelPage.checkInDateTextbox.sendKeys(listOfMaps.get(0).get("Check In Date"));
+		searchHotelPage.checkOutDateTextbox.clear();
+		searchHotelPage.checkOutDateTextbox.sendKeys(listOfMaps.get(0).get("Check Out Date"));
+		new Select(searchHotelPage.noOfRoomsDropdown).selectByVisibleText(listOfMaps.get(0).get("Number of Rooms"));
+		new Select(searchHotelPage.noOfAdultsDropdown).selectByVisibleText(listOfMaps.get(0).get("Adults per Room"));
+		
+		
+	}
+	
+	@When("user clicks on button in SearchHotelPage")
+	public void user_clicks_on_button_in_SearchHotelPage(DataTable dataTable) {
+		// Write code here that turns the phrase above into concrete actions
+		// For automatic transformation, change DataTable to one of
+		// E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+		// Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+		// Double, Byte, Short, Long, BigInteger or BigDecimal.
+		//
+		// For other transformations you can register a DataTableType.
+		
+		List<Map<String, String>> listOfMaps = dataTable.asMaps();
+		
+		if (listOfMaps.get(0).get("objectName").equalsIgnoreCase("searchButton"))
+		{
+			searchHotelPage.searchButton.click();
+			
+			
+		}
+		
+	}
+
 
 }

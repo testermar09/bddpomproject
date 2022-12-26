@@ -12,5 +12,13 @@ Feature: To Check Hotelname Location Roomtype Total Day from Search hotel page
     When user clicks on button in LoginPage
     |objectName|
     |loginButton|
+    Then user validates title to be "Adactin.com - Search Hotel"
+    Given user is on SearchHotelPage
+    When user enter details in SearchHotelPage
+    |Location|Hotels     |Number of Rooms|Check In Date|Check Out Date|Adults per Room|
+    |Sydney  |Hotel Creek|1 - One         |23/12/2022   |24/12/2022    |1 - One       |
+    When user clicks on button in SearchHotelPage
+    |objectName|
+    |searchButton|
 
  

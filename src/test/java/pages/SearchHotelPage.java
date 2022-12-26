@@ -1,44 +1,53 @@
 package pages;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class SearchHotelPage  {
+	
+	WebDriver driver;
+	
+	public SearchHotelPage(WebDriver driver)
+	{
+		PageFactory.initElements(driver, this);
+	}
+	
 
 	
 	@FindBy(xpath = "//select[@name='location']")
-	WebElement locationDropdown;
+	public WebElement locationDropdown;
 
 	@FindBy(xpath = "//select[@name='hotels']")
-	WebElement hotelsDropdown;
+	public WebElement hotelsDropdown;
 
 	@FindBy(xpath = "//select[@name='room_type']")
-	WebElement roomTypeDropdown;
+	public WebElement roomTypeDropdown;
 
 	@FindBy(xpath = "//select[@name='room_nos']")
-	WebElement noOfRoomsDropdown;
+	public WebElement noOfRoomsDropdown;
 
 	@FindBy(xpath = "//select[@name='adult_room']")
-	WebElement noOfAdultsDropdown;
+	public WebElement noOfAdultsDropdown;
 
 	@FindBy(xpath = "//select[@name='child_room']")
-	WebElement noOfChildrenDropdown;
+	public WebElement noOfChildrenDropdown;
 
 	@FindBy(xpath = "//input[@name='datepick_in']")
-	WebElement checkInDateTextbox;
+	public WebElement checkInDateTextbox;
 
 	@FindBy(xpath = "//input[@name='datepick_out']")
-	WebElement checkOutDateTextbox;
+	public WebElement checkOutDateTextbox;
 	
 	@FindBy(xpath="//input[@name='Submit']")
-	WebElement searchButton;
+	public WebElement searchButton;
 	
 	@FindBy(xpath="//span[@id='checkin_span']")
-	WebElement checkInDateError;
+	public WebElement checkInDateError;
 	
 	@FindBy(xpath="//span[@id='checkout_span']")
-	WebElement checkOutDateError;
+	public WebElement checkOutDateError;
 
 
 }
